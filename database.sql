@@ -1,46 +1,59 @@
-CREATE TABLE salas (
+CREATE SCHEMA coworking;
+
+GRANT ALL PRIVILEGES ON SCHEMA coworking TO uaiohh7lfkwlhyhgjuto;
+
+
+CREATE TABLE coworking.salas (
     id_Sala SERIAL PRIMARY KEY,
-    nombre VARCHAR(40),
-    filas INT,
-    columnas INT
+    nombre VARCHAR(40)
 );
 
-CREATE TABLE espacios (
-    id_espacio SERIAL PRIMARY KEY ,
+CREATE TABLE coworking.espacios (
+    id_espacio SERIAL PRIMARY KEY,
     fila INT,
     columna INT,
     id_Sala INT
 );
 
 
-CREATE TABLE reservas (
+CREATE TABLE coworking.reservas (
     id_reserva SERIAL PRIMARY KEY,
     id_espacio INT,
     id_usuario INT,
-    fecha_reserva TIMESTAMP
+    id_sesion INT,
+    fecha_reserva TIMESTAMP, 
+    status VARCHAR(15)
 );
 
-CREATE TABLE sesion (
+CREATE TABLE coworking.sesion (
     id_sesion SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
     hora_inicio VARCHAR(10),
-    hora_final VARCHAR(10),
-    id_reserva INT
+    hora_final VARCHAR(10)
 );
 
 
-CREATE TABLE usuarios (
+CREATE TABLE coworking.usuarios (
     id_usuario SERIAL PRIMARY KEY ,
     nombre VARCHAR(40)
 );
 
-DROP table sesion 
+-- drop table coworking.salas
 
-ALTER TABLE espacios ADD FOREIGN KEY(id_sala) REFERENCES salas(id_sala)
+-- drop table coworking.usuarios
 
-ALTER TABLE reservas ADD FOREIGN KEY(id_espacio) REFERENCES espacios(id_espacio)
+-- drop table coworking.espacios
 
-ALTER TABLE reservas ADD FOREIGN KEY(id_usuario) REFERENCES usuarios(id_usuario)
+-- drop table coworking.reservas
 
-ALTER TABLE sesion ADD FOREIGN KEY(id_reserva) REFERENCES reservas(id_reserva)
+-- drop table coworking.sesion
 
+
+ALTER TABLE coworking.espacios ADD FOREIGN KEY(id_sala) REFERENCES coworking.salas(id_sala)
+
+ALTER TABLE coworking.reservas ADD FOREIGN KEY(id_espacio) REFERENCES coworking.espacios(id_espacio)
+
+ALTER TABLE coworking.reservas ADD FOREIGN KEY(id_usuario) REFERENCES coworking.usuarios(id_usuario)
+
+ALTER TABLE coworking.reservas ADD FOREIGN KEY(id_sesion) REFERENCES coworking.sesion(id_sesion)
 
